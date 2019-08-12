@@ -56,7 +56,37 @@ namespace SGSTakePhoto.App
         }
 
         /// <summary>
-        /// 
+        /// 条形码或二维码扫描
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnScan_Click(object sender, RoutedEventArgs e)
+        {
+            ScanWindow scan = new ScanWindow { };
+            //如果是激活状态则返回
+            if (scan.IsClosed)
+            {
+                scan.Close();
+            }
+            else
+            {
+                if (scan.ShowDialog() == false)
+                {
+                    switch ((sender as TextBox).Name)
+                    {
+                        case "txtOrderNum":
+
+                            break;
+                        case "txtSampleId":
+
+                            break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 照片上传查询
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -81,32 +111,27 @@ namespace SGSTakePhoto.App
         }
 
         /// <summary>
-        /// 
+        /// 照片预览
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TxtOrderNum_Click(object sender, RoutedEventArgs e)
+        private void BtnBrowser_Click(object sender, RoutedEventArgs e)
         {
-            ScanWindow scan = new ScanWindow { };
-            //如果是激活状态则返回
-            if (scan.IsClosed)
+            Order order = dgShareFolder.SelectedItem as Order;
+            if (order == null)
             {
-                scan.Close();
+
+            }
+
+            if (!CommonHelper.UserControls.ContainsKey("Browser"))
+            {
+                BrowserModule browserModule = new BrowserModule(order);
+                CommonHelper.MainWindow.brMain.Child = browserModule;
+                CommonHelper.UserControls.Add("Browser", browserModule);
             }
             else
             {
-                if (scan.ShowDialog() == false)
-                {
-                    switch ((sender as TextBox).Name)
-                    {
-                        case "txtOrderNum":
-
-                            break;
-                        case "txtSampleId":
-
-                            break;
-                    }
-                }
+                CommonHelper.MainWindow.brMain.Child = CommonHelper.UserControls["Browser"];
             }
         }
     }

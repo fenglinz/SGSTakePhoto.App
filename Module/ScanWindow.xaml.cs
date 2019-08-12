@@ -1,4 +1,7 @@
-﻿using SGSTakePhoto.Infrastructure;
+﻿using Microsoft.Win32;
+using SGSTakePhoto.Infrastructure;
+using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,16 +22,19 @@ namespace SGSTakePhoto.App
         /// 
         /// </summary>
         public string BarCode { get; set; }
+
+        public int VideoInputQuantity { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         public ScanWindow()
         {
             InitializeComponent();
-            cmbCam.ItemsSource = MultimediaUtil.VideoInputNames;
+            //cmbCam.ItemsSource = MultimediaUtil.VideoInputNames;
             if (MultimediaUtil.VideoInputNames.Length > 0)
             {
-                cmbCam.SelectedIndex = 0;
+                VideoCapture.VideoCaptureSource = MultimediaUtil.VideoInputNames[0];
             }
             else
             {
@@ -42,19 +48,9 @@ namespace SGSTakePhoto.App
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void VideoCapture_NewVideoSample(object sender, WPFMediaKit.DirectShow.MediaPlayers.VideoSampleArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        /// <summary>
-        /// 切换摄像头
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CmbCam_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            VideoCapture.VideoCaptureSource = (string)cmbCam.SelectedItem;
+            VideoCapture.Play();
         }
 
         /// <summary>
@@ -69,32 +65,34 @@ namespace SGSTakePhoto.App
             bmp.Render(VideoCapture);
             BitmapEncoder encoder = new JpegBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bmp));
+            string tmpFileName = Path.GetTempFileName();
             using (MemoryStream ms = new MemoryStream())
             {
                 encoder.Save(ms);
-                byte[] captureData = ms.ToArray();
-
-                BarCodeScan scan = new BarCodeScan();
-                Response<string> result = scan.GetBarCode(captureData, (int)VideoCapture.ActualWidth, (int)VideoCapture.ActualHeight);
+                File.WriteAllBytes(tmpFileName, ms.ToArray());
+            }
+            BarCodeScan scan = new BarCodeScan();
+            using (FileStream fileSteam = File.OpenRead(tmpFileName))
+            {
+                Response<string> result = scan.GetBarCode(fileSteam);
                 if (!result.Success)
                 {
                     MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    VideoCapture.Play();
                 }
                 else
                 {
                     BarCode = result.Data;
+                    if (string.IsNullOrEmpty(BarCode))
+                    {
+                        MessageBox.Show("No valid barcode was obtained,Please Retry", "Notice", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        VideoCapture.Pause();
+                        this.Close();
+                    }
                 }
-            }
-
-            VideoCapture.Pause();
-
-            if (string.IsNullOrEmpty(BarCode))
-            {
-                MessageBox.Show("No valid barcode was obtained,Please Retry", "Notice", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                this.Close();
             }
         }
 
@@ -103,9 +101,66 @@ namespace SGSTakePhoto.App
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnRePlay_Click(object sender, RoutedEventArgs e)
+        private void BtnSwitch_Click(object sender, RoutedEventArgs e)
         {
-            VideoCapture.Play();
+            if (VideoInputQuantity == MultimediaUtil.VideoInputNames.Length - 1)
+            {
+                VideoInputQuantity = 0;
+            }
+            else
+            {
+                VideoInputQuantity++;
+            }
+
+            VideoCapture.VideoCaptureSource = MultimediaUtil.VideoInputNames[VideoInputQuantity];
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnLocal_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog
+            {
+                Filter = "图片文件(*.png;*.jpg;*.bmp;*.jpeg)|*.png;*.jpg;*.bmp;*.jpeg"
+            };
+
+            if (openFile.ShowDialog() == true)
+            {
+                FileStream fileStream = File.Open(openFile.FileName, FileMode.Open);
+                BarCodeScan scan = new BarCodeScan();
+                Response<string> result = scan.GetBarCode(fileStream);
+                if (!result.Success)
+                {
+                    MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    BarCode = result.Data;
+                    if (string.IsNullOrEmpty(BarCode))
+                    {
+                        MessageBox.Show("No valid barcode was obtained,Please Retry", "Notice", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        VideoCapture.Pause();
+                        this.Close();
+                    }
+                }
+                fileStream.Close();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            VideoCapture.Close();
+            base.OnClosing(e);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using SGSTakePhoto.Infrastructure;
+using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,9 +11,24 @@ namespace SGSTakePhoto.App
     /// </summary>
     public partial class OtsPhotoWindow : UserControl
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        private ObservableCollection<Order> orders;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public OtsPhotoWindow()
         {
             InitializeComponent();
+            orders = new ObservableCollection<Order>
+            {
+                new Order{Id="1", CaseNum="001", JobNum="job111", OrderNum="o001", SampleID="s001", Status="待上传", Owner="test",CreateTime=DateTime.Now },
+                new Order{Id="2", CaseNum="002", JobNum="job222", OrderNum="o002", SampleID="s002", Status="上传中", Owner="test",CreateTime=DateTime.Now }
+            };
+
+            dgOtsOrder.ItemsSource = orders;
         }
 
         /// <summary>
@@ -55,21 +72,8 @@ namespace SGSTakePhoto.App
         private void BtnTakePhoto_Click(object sender, RoutedEventArgs e)
         {
             Order order = dgOtsOrder.SelectedItem as Order;
-            if (order == null)
-            {
-
-            }
-
-            if (!CommonHelper.UserControls.ContainsKey("OtsOrder"))
-            {
-                OtsOrderModule otsOrder = new OtsOrderModule(order);
-                CommonHelper.MainWindow.brMain.Child = otsOrder;
-                CommonHelper.UserControls.Add("OtsOrder", otsOrder);
-            }
-            else
-            {
-                CommonHelper.MainWindow.brMain.Child = CommonHelper.UserControls["OtsOrder"];
-            }
+            OtsOrderModule otsOrder = new OtsOrderModule(order);
+            CommonHelper.MainWindow.brMain.Child = otsOrder;
         }
 
         /// <summary>
@@ -83,27 +87,32 @@ namespace SGSTakePhoto.App
         }
 
         /// <summary>
-        /// 上传
+        /// 照片上传查询
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void BtnUpload_Click(object sender, RoutedEventArgs e)
         {
             Order order = dgOtsOrder.SelectedItem as Order;
-            if (order == null)
-            {
-
-            }
-
-            if (!CommonHelper.UserControls.ContainsKey("Upload"))
+            if (order != null)
             {
                 UploadModule uploadModule = new UploadModule(order);
                 CommonHelper.MainWindow.brMain.Child = uploadModule;
-                CommonHelper.UserControls.Add("Upload", uploadModule);
             }
-            else
+        }
+
+        /// <summary>
+        /// 照片预览
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnBrowser_Click(object sender, RoutedEventArgs e)
+        {
+            Order order = dgOtsOrder.SelectedItem as Order;
+            if (order != null)
             {
-                CommonHelper.MainWindow.brMain.Child = CommonHelper.UserControls["Upload"];
+                BrowserModule module = new BrowserModule(order);
+                CommonHelper.MainWindow.brMain.Child = module;
             }
         }
     }

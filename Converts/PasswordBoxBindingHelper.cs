@@ -5,6 +5,9 @@ using System.Windows.Controls;
 
 namespace SGSTakePhoto.App
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class PasswordBoxBindingHelper
     {
         public static void SetPasswordBoxSelection(PasswordBox passwordBox, int start, int length)
@@ -46,35 +49,18 @@ namespace SGSTakePhoto.App
 
 
         private static void OnIsPasswordBindingEnabledChanged(DependencyObject obj,
-
                                                               DependencyPropertyChangedEventArgs e)
-
         {
-
             var passwordBox = obj as PasswordBox;
-
-
-
             if (passwordBox != null)
-
-            {
-
+           {
                 passwordBox.PasswordChanged -= PasswordBoxPasswordChanged;
-
-
-
                 if ((bool)e.NewValue)
-
                 {
-
                     passwordBox.PasswordChanged += PasswordBoxPasswordChanged;
 
                 }
-
-
-
             }
-
         }
 
 
@@ -82,79 +68,38 @@ namespace SGSTakePhoto.App
         //when the passwordBox's password changed, update the buffer
 
         static void PasswordBoxPasswordChanged(object sender, RoutedEventArgs e)
-
         {
-
             var passwordBox = (PasswordBox)sender;
-
-
-
             if (!String.Equals(GetBindedPassword(passwordBox), passwordBox.Password))
-
             {
-
                 SetBindedPassword(passwordBox, passwordBox.Password);
-
             }
-
         }
-
-
-
-
 
         public static string GetBindedPassword(DependencyObject obj)
-
         {
-
             return (string)obj.GetValue(BindedPasswordProperty);
-
         }
-
-
-
-
 
         public static void SetBindedPassword(DependencyObject obj, string value)
-
         {
-
             obj.SetValue(BindedPasswordProperty, value);
-
         }
 
-
-
         public static readonly DependencyProperty BindedPasswordProperty =
-
             DependencyProperty.RegisterAttached("BindedPassword", typeof(string),
-
             typeof(PasswordBoxBindingHelper),
-
             new UIPropertyMetadata(string.Empty, OnBindedPasswordChanged));
-
-
-
         //when the buffer changed, upate the passwordBox's password
 
         private static void OnBindedPasswordChanged(DependencyObject obj,
-
                                                     DependencyPropertyChangedEventArgs e)
-
         {
-
             var passwordBox = obj as PasswordBox;
-
             if (passwordBox != null)
-
             {
-
-
-
                 passwordBox.Password = e.NewValue == null ? string.Empty : e.NewValue.ToString();
-
             }
-
         }
     }
 }

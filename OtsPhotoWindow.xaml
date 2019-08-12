@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SGSTakePhoto.App"
         Background="Transparent"
         Name="OtsPhoto"
-        mc:Ignorable="d" Height="800" Width="1000">
+        mc:Ignorable="d" Height="800" Width="1200">
     <UserControl.Resources>
         <local:CheckBoxEnableConverter x:Key="CheckBoxEnableConverter" />
     </UserControl.Resources>
@@ -38,9 +38,9 @@
                     <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtSampleId" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
                     <Label Grid.Row="1" Grid.Column="2" Content="Status" Height="30" Style="{DynamicResource h5}"/>
                     <ComboBox Grid.Column="3" Grid.Row="1" Height="30" Text="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        <ComboBoxItem Content="100000" IsSelected="True" />
+                        <ComboBoxItem Content="120000" IsSelected="True" />
                         <ComboBoxItem Content="500000"  />
-                        <ComboBoxItem Content="1000000"  />
+                        <ComboBoxItem Content="1200000"  />
                         <ComboBoxItem Content="2000000"  />
                     </ComboBox>
                     <Button Grid.Row="1" Grid.Column="4" Style="{DynamicResource btn-primary}" Content="Search" Height="30" Margin="5,0,0,0" Width="100" x:Name="btnSearch"/>
@@ -51,12 +51,12 @@
                 <Button Style="{DynamicResource btn-danger}" Content="Delete" Height="30" Margin="20,0,0,0" Width="80" x:Name="btnDelete" Click="BtnDelete_Click"/>
                 <Button Style="{DynamicResource btn-info}" Content="Upload" Height="30" Margin="20,0,0,0" Width="80" x:Name="btnUpload" Click="BtnUpload_Click"/>
             </StackPanel>
-            <DataGrid Grid.Row="2" Name="dgOtsOrder">
+            <DataGrid Grid.Row="2" Name="dgOtsOrder" AutoGenerateColumns="False" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="" Width="35">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsEnabled="{Binding TotalRows,Converter={StaticResource CheckBoxEnableConverter}}" IsChecked="{Binding IsSync, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource checkbox has-success}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -66,7 +66,16 @@
                     <DataGridTextColumn Width="*" IsReadOnly="True" Header="Status" Binding="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
                     <DataGridTextColumn Width="*" IsReadOnly="True" Header="Owner" Binding="{Binding Owner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
                     <DataGridTextColumn Width="*" IsReadOnly="True" Header="Create Time" Binding="{Binding CreateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
-                    <DataGridHyperlinkColumn Width="*"  Header="Opration"/>
+                    <DataGridTemplateColumn x:Name="Operation" Header="Operation" Width="220" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="btnPhotoList" Content="Photo List" Margin="10,0,0,0" Height="30" Width="100" Click="BtnUpload_Click"/>
+                                    <Button x:Name="btnBrowser" Content="Browser" Margin="10,0,0,0" Height="30" Width="80" Click="BtnBrowser_Click"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

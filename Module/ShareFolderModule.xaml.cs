@@ -46,5 +46,38 @@ namespace SGSTakePhoto.App
         {
             CommonHelper.MainWindow.brMain.Child = CommonHelper.MainWindow.shareFolderModule;
         }
+
+        /// <summary>
+        /// 点击扫描按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnScan_Click(object sender, RoutedEventArgs e)
+        {
+            ScanWindow scan = new ScanWindow { };
+            //如果是激活状态则返回
+            if (scan.IsClosed)
+            {
+                scan.Close();
+            }
+            else
+            {
+                if (scan.ShowDialog() == false)
+                {
+                    switch ((sender as TextBox).Name)
+                    {
+                        case "txtCaseNum":
+
+                            break;
+                        case "txtJobNum":
+
+                            break;
+                        case "txtSampleId":
+
+                            break;
+                    }
+                }
+            }
+        }
     }
 }

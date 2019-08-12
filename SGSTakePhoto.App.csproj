@@ -87,6 +87,7 @@
       <HintPath>packages\System.Data.SQLite.Linq.1.0.111.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -102,11 +103,9 @@
     <Reference Include="WPFMediaKit, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\WPFMediaKit.2.2.0\lib\WPFMediaKit.dll</HintPath>
     </Reference>
-    <Reference Include="zxing, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
-      <HintPath>packages\ZXing.Net.0.16.4\lib\net45\zxing.dll</HintPath>
-    </Reference>
-    <Reference Include="zxing.presentation, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
-      <HintPath>packages\ZXing.Net.0.16.4\lib\net45\zxing.presentation.dll</HintPath>
+    <Reference Include="zxing, Version=1.0.3824.27643, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\zxing.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -114,11 +113,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converts\RecipesImageInfoConverter.cs" />
     <Compile Include="Extention\ActiveDirectoryService.cs" />
     <Compile Include="Extention\BarCodeScan.cs" />
     <Compile Include="Extention\CommonHelper.cs" />
-    <Compile Include="Extention\SqLiteHelper.cs" />
     <Compile Include="Extention\UploadFileService.cs" />
+    <Compile Include="Module\BrowserModule.xaml.cs">
+      <DependentUpon>BrowserModule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\CameraModule.xaml.cs">
+      <DependentUpon>CameraModule.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Module\ShareFolderModule.xaml.cs">
       <DependentUpon>ShareFolderModule.xaml</DependentUpon>
     </Compile>
@@ -134,6 +139,11 @@
     <Compile Include="Module\UploadModule.xaml.cs">
       <DependentUpon>UploadModule.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Module\PhotoViewModule.xaml.cs">
+      <DependentUpon>PhotoViewModule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\BaseServices.cs" />
+    <Compile Include="Services\UserServices.cs" />
     <Compile Include="SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
@@ -179,6 +189,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Module\BrowserModule.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Module\CameraModule.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Module\ShareFolderModule.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -206,6 +224,10 @@
     <Page Include="PathGeometries\Glyphicons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\PhotoViewModule.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SettingWindow.xaml">
       <SubType>Designer</SubType>
@@ -301,6 +323,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Data\SgsLocalData.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -314,6 +339,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\glyphicons-halflings-regular.svg" />
+    <Content Include="Library\zxing.dll" />
     <Resource Include="Icon\sgs-logo.png" />
     <Content Include="Library\DirectShowLib-2005.dll" />
     <Content Include="Library\EVRPresenter32.dll" />
@@ -338,6 +364,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Upload\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\WPFMediaKit.2.2.0\build\WPFMediaKit.targets" Condition="Exists('packages\WPFMediaKit.2.2.0\build\WPFMediaKit.targets')" />

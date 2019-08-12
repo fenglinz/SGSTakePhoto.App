@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SGSTakePhoto.App"
              mc:Ignorable="d" Name="SlimOrder"
-             d:DesignHeight="800" d:DesignWidth="1000">
+             d:DesignHeight="800" d:DesignWidth="1200">
     <GroupBox Header="Create SLIM Folder">
         <Grid>
             <Grid.RowDefinitions>
@@ -31,9 +31,9 @@
                 </Grid.ColumnDefinitions>
                 <Button Name="btnBack" Content="Back" Width="80" Style="{DynamicResource btn-success}" Click="BtnBack_Click"/>
                 <Label Grid.Row="1" Content="Order Num" Style="{DynamicResource h5}"/>
-                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtOrderNum" Height="30" Tag="BarCode" Style="{DynamicResource input-group-btn right}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtOrderNum" Height="30" Tag="BarCode" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
                 <Label Grid.Row="2" Content="Sample ID" Style="{DynamicResource h5}"/>
-                <TextBox Grid.Row="2" Grid.Column="2" x:Name="txtSampleID" Height="30" Tag="BarCode" Style="{DynamicResource input-group-btn right}"/>
+                <TextBox Grid.Row="2" Grid.Column="2" x:Name="txtSampleID" Height="30" Tag="BarCode" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
                 <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal">
                     <Button Name="btnOriginal" Content="Original" Width="80" Margin="10,0,0,0"/>
                     <Button Name="btnBefore" Content="Before" Width="80" Margin="20,0,0,0"/>

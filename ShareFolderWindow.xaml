@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SGSTakePhoto.App"
         Name="ShareFolder"
-        mc:Ignorable="d"  Height="800" Width="1000">
+        mc:Ignorable="d"  Height="800" Width="1200">
     <UserControl.Resources>
         <local:CheckBoxEnableConverter x:Key="CheckBoxEnableConverter" />
     </UserControl.Resources>
@@ -30,16 +30,16 @@
                         <ColumnDefinition Width="15*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Order Num" Height="30" Style="{DynamicResource h5}"/>
-                    <TextBox Grid.Column="1" x:Name="txtOrderNum" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="TxtOrderNum_Click"/>
+                    <TextBox Grid.Column="1" x:Name="txtOrderNum" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
                     <Label Grid.Column="2" Content="Job Num" Height="30" Style="{DynamicResource h5}"/>
                     <ComboBox Grid.Column="3" Height="30" Text="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        <ComboBoxItem Content="100000" IsSelected="True" />
+                        <ComboBoxItem Content="120000" IsSelected="True" />
                         <ComboBoxItem Content="500000"  />
-                        <ComboBoxItem Content="1000000"  />
+                        <ComboBoxItem Content="1200000"  />
                         <ComboBoxItem Content="2000000"  />
                     </ComboBox>
                     <Label Grid.Row="1" Grid.Column="0" Content="Sample ID" Height="30" Style="{DynamicResource h5}"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtSampleId" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="TxtOrderNum_Click"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtSampleId" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
                     <Button Grid.Row="1" Grid.Column="3" Style="{DynamicResource btn-primary}" Content="Search" Height="30" HorizontalAlignment="Left" Width="100" x:Name="btnSearch"/>
                 </Grid>
             </GroupBox>
@@ -62,7 +62,16 @@
                     <DataGridTextColumn Width="*" IsReadOnly="True" Header="Status" Binding="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
                     <DataGridTextColumn Width="*" IsReadOnly="True" Header="Owner" Binding="{Binding Owner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
                     <DataGridTextColumn Width="*" IsReadOnly="True" Header="Create Time" Binding="{Binding CreateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
-                    <DataGridHyperlinkColumn Width="*"  Header="Opration"/>
+                    <DataGridTemplateColumn x:Name="Operation" Header="Operation" Width="220" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="btnPhotoList" Content="Photo List" Margin="10,0,0,0" Height="30" Width="100" Click="BtnUpload_Click"/>
+                                    <Button x:Name="btnBrowser" Content="Browser" Margin="10,0,0,0" Height="30" Width="80" Click="BtnBrowser_Click"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

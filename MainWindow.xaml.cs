@@ -45,6 +45,7 @@ namespace SGSTakePhoto.App
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.brMain.Child = this.otsModule;
+            CommonHelper.CurrentSystem = "OTS";
         }
 
         /// <summary>
@@ -89,6 +90,7 @@ namespace SGSTakePhoto.App
                     break;
             }
 
+            CommonHelper.CurrentSystem = btn.Name.Replace("btn", string.Empty);
             this.brMain.Child.RenderSize = new Size { Height = this.Height, Width = this.Width };
         }
     }

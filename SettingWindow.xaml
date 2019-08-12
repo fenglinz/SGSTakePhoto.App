@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SGSTakePhoto.App"
         Name="Setting"
         Loaded="SettingWindow_Loaded"
-        mc:Ignorable="d"  Height="800" Width="1000">
+        mc:Ignorable="d"  Height="800" Width="1200">
     <UserControl.Resources>
         <local:CheckBoxEnableConverter x:Key="CheckBoxEnableConverter" />
     </UserControl.Resources>

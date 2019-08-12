@@ -177,7 +177,7 @@ namespace SGSTakePhoto.App.Extention
                 proc.StandardInput.WriteLine("exit");
                 while (!proc.HasExited)
                 {
-                    proc.WaitForExit(1000);
+                    proc.WaitForExit(1200);
                 }
                 string errormsg = proc.StandardError.ReadToEnd();
                 proc.StandardError.Close();

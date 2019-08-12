@@ -538,7 +538,7 @@
             </MultiTrigger>
             <Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
                 <Setter Property="Margin" TargetName="Shdw" Value="0,0,5,5"/>
-                <Setter Property="Background" TargetName="Shdw" Value="#71000000"/>
+                <Setter Property="Background" TargetName="Shdw" Value="#71200000"/>
             </Trigger>
             <Trigger Property="ScrollViewer.CanContentScroll" SourceName="DropDownScrollViewer" Value="false">
                 <Setter Property="Canvas.Top" TargetName="OpaqueRect" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}"/>
@@ -582,7 +582,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
                             <Setter Property="Margin" TargetName="Shdw" Value="0,0,5,5"/>
-                            <Setter Property="Background" TargetName="Shdw" Value="#71000000"/>
+                            <Setter Property="Background" TargetName="Shdw" Value="#71200000"/>
                         </Trigger>
                         <Trigger Property="HasItems" Value="false">
                             <Setter Property="Height" TargetName="DropDownBorder" Value="95"/>

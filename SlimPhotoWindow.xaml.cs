@@ -25,7 +25,12 @@ namespace SGSTakePhoto.App
             InitializeComponent();
         }
 
-        private void TxtOrderNum_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnScan_Click(object sender, RoutedEventArgs e)
         {
             ScanWindow scan = new ScanWindow { };
             //如果是激活状态则返回
@@ -50,6 +55,11 @@ namespace SGSTakePhoto.App
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnTakePhoto_Click(object sender, RoutedEventArgs e)
         {
             Order order = dgSlimOrder.SelectedItem as Order;
@@ -70,13 +80,18 @@ namespace SGSTakePhoto.App
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
         /// <summary>
-        /// 
+        /// 照片上传查询
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -97,6 +112,31 @@ namespace SGSTakePhoto.App
             else
             {
                 CommonHelper.MainWindow.brMain.Child = CommonHelper.UserControls["Upload"];
+            }
+        }
+
+        /// <summary>
+        /// 照片预览
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnBrowser_Click(object sender, RoutedEventArgs e)
+        {
+            Order order = dgSlimOrder.SelectedItem as Order;
+            if (order == null)
+            {
+
+            }
+
+            if (!CommonHelper.UserControls.ContainsKey("Browser"))
+            {
+                BrowserModule browserModule = new BrowserModule(order);
+                CommonHelper.MainWindow.brMain.Child = browserModule;
+                CommonHelper.UserControls.Add("Browser", browserModule);
+            }
+            else
+            {
+                CommonHelper.MainWindow.brMain.Child = CommonHelper.UserControls["Browser"];
             }
         }
     }

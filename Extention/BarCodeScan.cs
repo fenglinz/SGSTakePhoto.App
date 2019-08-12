@@ -1,7 +1,9 @@
-﻿using SGSTakePhoto.Infrastructure;
+﻿using com.google.zxing;
+using com.google.zxing.common;
+using SGSTakePhoto.Infrastructure;
 using System;
-using ZXing;
-using ZXing.Common;
+using System.Drawing;
+using System.IO;
 
 namespace SGSTakePhoto.App
 {
@@ -17,11 +19,12 @@ namespace SGSTakePhoto.App
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        public Response<string> GetBarCode(Byte[] buffer, int width, int height)
+        public Response<string> GetBarCode(Stream stream)
         {
             try
             {
-                LuminanceSource source = new RGBLuminanceSource(buffer, width, height);
+                Bitmap img = (Bitmap)Image.FromStream(stream);
+                LuminanceSource source = new RGBLuminanceSource(img, img.Width, img.Height);
                 BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
 
                 MultiFormatReader reader = new MultiFormatReader();

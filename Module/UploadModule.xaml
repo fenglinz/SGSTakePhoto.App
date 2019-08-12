@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SGSTakePhoto.App"
              mc:Ignorable="d"
              Name="Upload"
-             d:DesignHeight="800" d:DesignWidth="1000">
+             d:DesignHeight="800" d:DesignWidth="1200">
     <UserControl.Resources>
         <local:CheckBoxEnableConverter x:Key="CheckBoxEnableConverter" />
     </UserControl.Resources>

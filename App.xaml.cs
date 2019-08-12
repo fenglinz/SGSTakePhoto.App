@@ -23,7 +23,7 @@ namespace SGSTakePhoto.App
         //单实例模式
         private Mutex mutex;
         protected override void OnStartup(StartupEventArgs e)
-        {
+      {
             AppDomain.CurrentDomain.AssemblyResolve += OnResolveAssembly;
             bool startupFlag = false;
             try
