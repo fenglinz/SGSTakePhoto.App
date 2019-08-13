@@ -27,10 +27,37 @@ namespace SGSTakePhoto.App
         /// </summary>
         public Order Order { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public CameraModule()
+        {
+            InitializeComponent();
+            VideoCapture.MediaClosed += VideoCapture_MediaClosed;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void VideoCapture_MediaClosed(object sender, RoutedEventArgs e)
+        {
+            //CommonHelper.MainWindow.brMain.Child.
+        }
+
         public CameraModule(Order order)
         {
             InitializeComponent();
             this.Order = order;
+            Start();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Start()
+        {
             if (MultimediaUtil.VideoInputNames.Length > 0)
             {
                 VideoCapture.VideoCaptureSource = MultimediaUtil.VideoInputNames[0];
@@ -39,6 +66,19 @@ namespace SGSTakePhoto.App
             {
                 MessageBox.Show("No camera found", "Notice", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            if (!VideoCapture.IsPlaying)
+            {
+                MessageBox.Show("照相机关闭");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Stop()
+        {
+            VideoCapture.Close();
         }
 
         /// <summary>

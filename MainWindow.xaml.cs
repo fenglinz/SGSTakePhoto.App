@@ -16,6 +16,7 @@ namespace SGSTakePhoto.App
         public readonly SlimPhotoWindow SlimModule = new SlimPhotoWindow { };
         public readonly ShareFolderWindow shareFolderModule = new ShareFolderWindow { };
         public readonly SettingWindow settingModule = new SettingWindow { };
+        public readonly CameraModule cameraModule = new CameraModule { };
         private readonly List<UserControl> userControl;
 
         /// <summary>
@@ -90,6 +91,8 @@ namespace SGSTakePhoto.App
                     break;
             }
 
+            //停止照相机
+            cameraModule.Stop();
             CommonHelper.CurrentSystem = btn.Name.Replace("btn", string.Empty);
             this.brMain.Child.RenderSize = new Size { Height = this.Height, Width = this.Width };
         }

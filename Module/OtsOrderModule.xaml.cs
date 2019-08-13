@@ -1,19 +1,7 @@
 ﻿using SGSTakePhoto.Infrastructure;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SGSTakePhoto.App
 {
@@ -112,16 +100,8 @@ namespace SGSTakePhoto.App
                     break;
             }
 
-            if (!CommonHelper.UserControls.ContainsKey("Camera"))
-            {
-                CameraModule cameraModule = new CameraModule(Order);
-                CommonHelper.MainWindow.brMain.Child = cameraModule;
-                CommonHelper.UserControls.Add("Camera", cameraModule);
-            }
-            else
-            {
-                CommonHelper.MainWindow.brMain.Child = CommonHelper.UserControls["Camera"];
-            }
+            CommonHelper.MainWindow.brMain.Child = CommonHelper.MainWindow.cameraModule;
+            CommonHelper.MainWindow.cameraModule.Start();
         }
 
         /// 关闭窗口事件
