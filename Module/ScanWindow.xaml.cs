@@ -77,7 +77,7 @@ namespace SGSTakePhoto.App
                 Response<string> result = scan.GetBarCode(fileSteam);
                 if (!result.Success)
                 {
-                    MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("No valid barcode was obtained,Please Retry", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     VideoCapture.Play();
                 }
                 else
@@ -97,7 +97,7 @@ namespace SGSTakePhoto.App
         }
 
         /// <summary>
-        /// 重新拍照
+        /// 切换摄像头
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -134,7 +134,7 @@ namespace SGSTakePhoto.App
                 Response<string> result = scan.GetBarCode(fileStream);
                 if (!result.Success)
                 {
-                    MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("No valid barcode was obtained,Please Retry", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {

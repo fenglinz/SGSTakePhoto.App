@@ -43,7 +43,7 @@ namespace SGSTakePhoto.App
             {
                 new UserConfig
                 {
-                    Id="1",User="admin",Organization="VOC",ExecutionSystem="SLIM",DefaultWidth=1920,DefaultHeight=1080,DefaultDPI=96
+                    Id="1",UserName="admin",Organization="VOC",ExecutionSystem="SLIM",DefaultWidth=1920,DefaultHeight=1080,DefaultDPI=96
                 }
             };
 

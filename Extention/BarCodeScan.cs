@@ -23,6 +23,7 @@ namespace SGSTakePhoto.App
         {
             try
             {
+                stream.Seek(0, SeekOrigin.Begin);
                 Bitmap img = (Bitmap)Image.FromStream(stream);
                 LuminanceSource source = new RGBLuminanceSource(img, img.Width, img.Height);
                 BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));

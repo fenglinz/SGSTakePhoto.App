@@ -17,7 +17,7 @@
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <GroupBox Grid.Row="0" BorderThickness="1" Header="Menu">
+        <GroupBox Grid.Row="0" BorderThickness="1" Margin="2" Header="Menu">
             <GroupBox.Content>
                 <StackPanel Orientation="Vertical"  Grid.Column="0" VerticalAlignment="Top">
                     <Button Style="{DynamicResource btn-primary}" Content="OTS Photo" Height="28" Margin="0,20,0,0" Width="120" x:Name="btnOTS" Click="BtnMenu_Click"/>

@@ -24,7 +24,7 @@ namespace SGSTakePhoto.App
             InitializeComponent();
             Orders = new ObservableCollection<Order>
             {
-                new Order{Id=Guid.NewGuid().ToString(), CaseNum="001", JobNum="job111", OrderNum="o001", SampleID="s001", Status="待上传", Owner="test",CreateTime=DateTime.Now },
+                new Order { Id = Guid.NewGuid().ToString(), CaseNum = "001", JobNum = "job111", OrderNum = "o001", SampleID = "s001", Status = "待上传", Owner = "test",CreateTime=DateTime.Now },
                 new Order{Id=Guid.NewGuid().ToString(), CaseNum="002", JobNum="job222", OrderNum="o002", SampleID="s002", Status="上传中", Owner="test",CreateTime=DateTime.Now }
             };
 
@@ -51,6 +51,7 @@ namespace SGSTakePhoto.App
                     switch ((sender as TextBox).Name)
                     {
                         case "txtCaseNum":
+                            this.txtCaseNum.Text = scan.BarCode;
 
                             break;
                         case "txtJobNum":
